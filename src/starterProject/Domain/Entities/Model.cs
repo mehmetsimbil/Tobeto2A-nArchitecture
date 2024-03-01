@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace Domain.Entities;
 public class Model : Entity<Guid>
 {
-    public int BrandId { get; set; }
-    public int FuelId { get; set; }
-    public int TransmissionId { get; set; }
+    public Guid BrandId { get; set; }
+    public Guid FuelId { get; set; }
+    public Guid TransmissionId { get; set; }
     public string Name { get; set; }
     public double DailyPrice { get; set; }
     public short Year { get; set; }
