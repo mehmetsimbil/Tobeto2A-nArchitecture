@@ -25,4 +25,9 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Features\CorporateCustomers\Commands\Rules\" />
+    <Folder Include="Features\Fuels\Commands\Rules\" />
+    <Folder Include="Features\Transmissions\Commands\Rules\" />
+  </ItemGroup>
 </Project>

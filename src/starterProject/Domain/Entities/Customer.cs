@@ -14,6 +14,6 @@ public class Customer : Entity<Guid>
     public string Password { get; set; }
     public IndividualCustomer? IndividualCustomer { get; set; } = null;
     public CorporateCustomer? CorporateCustomer { get; set; } = null;
-    public int IndividualCustomerId { get; set; }
-    public int CorporateCustomerId { get; set; }
+    public Guid IndividualCustomerId { get; set; }
+    public Guid CorporateCustomerId { get; set; }
 }

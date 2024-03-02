@@ -10,7 +10,7 @@ public class Car : Entity<Guid>
 {
     public string Name{ get; set; }
     public int ColorId { get; set; }
-    public int ModelId { get; set; }
+    public Guid ModelId { get; set; }
     public int CarState { get; set; }
     public int Kilometer { get; set; }
     public int ModelYear { get; set; }

@@ -77,8 +77,8 @@ namespace Persistence.Migrations
                     b.Property<int>("Kilometer")
                         .HasColumnType("int");
 
-                    b.Property<int>("ModelId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ModelId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("ModelYear")
                         .HasColumnType("int");
@@ -141,10 +141,7 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CorporateCustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("CorporateCustomerId1")
+                    b.Property<Guid>("CorporateCustomerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
@@ -161,10 +158,7 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IndividualCustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("IndividualCustomerId1")
+                    b.Property<Guid>("IndividualCustomerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LastName")
@@ -180,9 +174,9 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CorporateCustomerId1");
+                    b.HasIndex("CorporateCustomerId");
 
-                    b.HasIndex("IndividualCustomerId1");
+                    b.HasIndex("IndividualCustomerId");
 
                     b.ToTable("Customers");
                 });
@@ -673,12 +667,12 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("15240a82-d6fb-400c-983f-6a819bdb75be"),
+                            Id = new Guid("46f9fc67-681d-4bf8-8dee-cfe3ee43aad4"),
                             AuthenticatorType = 0,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "narch@kodlama.io",
-                            PasswordHash = new byte[] { 209, 105, 180, 151, 120, 40, 226, 76, 126, 201, 139, 83, 145, 178, 129, 125, 206, 212, 46, 213, 166, 141, 208, 220, 76, 164, 21, 29, 144, 222, 25, 135, 152, 17, 233, 231, 78, 219, 19, 251, 177, 123, 21, 152, 34, 100, 126, 5, 53, 113, 103, 39, 227, 35, 65, 42, 102, 233, 35, 1, 120, 186, 255, 154 },
-                            PasswordSalt = new byte[] { 251, 73, 112, 182, 255, 47, 187, 125, 114, 154, 239, 227, 161, 62, 56, 83, 110, 159, 196, 5, 32, 201, 4, 142, 95, 65, 197, 209, 144, 130, 248, 139, 58, 139, 215, 225, 208, 104, 242, 255, 112, 125, 61, 102, 194, 129, 221, 127, 127, 242, 0, 146, 173, 253, 182, 165, 0, 233, 254, 218, 101, 196, 197, 218, 245, 184, 245, 30, 71, 213, 20, 37, 126, 223, 164, 120, 228, 62, 25, 138, 249, 211, 190, 137, 254, 118, 195, 10, 151, 207, 72, 167, 33, 131, 244, 127, 226, 15, 60, 189, 237, 145, 233, 100, 129, 8, 2, 162, 83, 205, 231, 44, 246, 37, 76, 241, 73, 49, 165, 104, 191, 208, 15, 229, 93, 28, 84, 142 }
+                            PasswordHash = new byte[] { 17, 53, 170, 207, 95, 149, 173, 144, 83, 48, 236, 220, 104, 33, 215, 216, 141, 216, 94, 19, 113, 126, 118, 248, 239, 183, 197, 157, 78, 182, 128, 243, 115, 249, 176, 162, 79, 240, 104, 234, 9, 26, 134, 44, 54, 30, 83, 99, 21, 174, 255, 169, 125, 107, 250, 33, 201, 217, 177, 76, 224, 74, 189, 169 },
+                            PasswordSalt = new byte[] { 198, 182, 77, 20, 127, 175, 129, 188, 169, 215, 153, 2, 79, 11, 85, 224, 195, 12, 50, 183, 150, 228, 61, 184, 96, 9, 92, 42, 74, 194, 34, 71, 224, 158, 83, 44, 182, 99, 8, 244, 127, 141, 233, 237, 10, 190, 129, 127, 68, 199, 92, 80, 128, 152, 148, 192, 210, 127, 29, 203, 52, 73, 106, 56, 153, 20, 132, 222, 232, 23, 123, 247, 144, 193, 207, 225, 252, 226, 137, 199, 47, 94, 191, 77, 112, 20, 93, 100, 185, 173, 39, 245, 212, 186, 24, 214, 49, 234, 6, 191, 201, 95, 106, 34, 0, 243, 207, 66, 214, 236, 73, 67, 195, 189, 111, 218, 182, 133, 221, 240, 196, 131, 119, 14, 80, 152, 63, 146 }
                         });
                 });
 
@@ -720,10 +714,10 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0804fdbc-009b-4ba4-99f9-c3ce256d4943"),
+                            Id = new Guid("9851d4c7-2841-4a9b-887a-820b3f44bc51"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OperationClaimId = 1,
-                            UserId = new Guid("15240a82-d6fb-400c-983f-6a819bdb75be")
+                            UserId = new Guid("46f9fc67-681d-4bf8-8dee-cfe3ee43aad4")
                         });
                 });
 
@@ -731,11 +725,15 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Entities.CorporateCustomer", "CorporateCustomer")
                         .WithMany()
-                        .HasForeignKey("CorporateCustomerId1");
+                        .HasForeignKey("CorporateCustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Domain.Entities.IndividualCustomer", "IndividualCustomer")
                         .WithMany()
-                        .HasForeignKey("IndividualCustomerId1");
+                        .HasForeignKey("IndividualCustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CorporateCustomer");
 

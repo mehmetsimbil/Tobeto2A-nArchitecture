@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class pair1 : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,7 +38,7 @@ namespace Persistence.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ColorId = table.Column<int>(type: "int", nullable: false),
-                    ModelId = table.Column<int>(type: "int", nullable: false),
+                    ModelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CarState = table.Column<int>(type: "int", nullable: false),
                     Kilometer = table.Column<int>(type: "int", nullable: false),
                     ModelYear = table.Column<int>(type: "int", nullable: false),
@@ -162,10 +162,8 @@ namespace Persistence.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IndividualCustomerId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CorporateCustomerId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    IndividualCustomerId = table.Column<int>(type: "int", nullable: false),
-                    CorporateCustomerId = table.Column<int>(type: "int", nullable: false),
+                    IndividualCustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CorporateCustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -174,15 +172,17 @@ namespace Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Customers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Customers_CorporateCustomers_CorporateCustomerId1",
-                        column: x => x.CorporateCustomerId1,
+                        name: "FK_Customers_CorporateCustomers_CorporateCustomerId",
+                        column: x => x.CorporateCustomerId,
                         principalTable: "CorporateCustomers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Customers_IndividualCustomers_IndividualCustomerId1",
-                        column: x => x.IndividualCustomerId1,
+                        name: "FK_Customers_IndividualCustomers_IndividualCustomerId",
+                        column: x => x.IndividualCustomerId,
                         principalTable: "IndividualCustomers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -190,15 +190,12 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BrandId = table.Column<int>(type: "int", nullable: false),
-                    FuelId = table.Column<int>(type: "int", nullable: false),
-                    TransmissionId = table.Column<int>(type: "int", nullable: false),
+                    BrandId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FuelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TransmissionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DailyPrice = table.Column<double>(type: "float", nullable: false),
                     Year = table.Column<short>(type: "smallint", nullable: false),
-                    BrandId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    FuelId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    TransmissionId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -207,20 +204,23 @@ namespace Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Models", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Models_Brands_BrandId1",
-                        column: x => x.BrandId1,
+                        name: "FK_Models_Brands_BrandId",
+                        column: x => x.BrandId,
                         principalTable: "Brands",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Models_Fuels_FuelId1",
-                        column: x => x.FuelId1,
+                        name: "FK_Models_Fuels_FuelId",
+                        column: x => x.FuelId,
                         principalTable: "Fuels",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Models_Transmissions_TransmissionId1",
-                        column: x => x.TransmissionId1,
+                        name: "FK_Models_Transmissions_TransmissionId",
+                        column: x => x.TransmissionId,
                         principalTable: "Transmissions",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -358,22 +358,22 @@ namespace Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AuthenticatorType", "CreatedDate", "DeletedDate", "Email", "PasswordHash", "PasswordSalt", "UpdatedDate" },
-                values: new object[] { new Guid("721b2e51-85ec-43ef-ac6c-14ca39af31b0"), 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "narch@kodlama.io", new byte[] { 82, 89, 88, 191, 59, 216, 59, 200, 47, 82, 241, 163, 155, 174, 0, 19, 4, 45, 152, 38, 55, 253, 31, 103, 47, 204, 90, 104, 102, 54, 144, 191, 124, 229, 23, 142, 18, 21, 155, 23, 64, 219, 107, 111, 93, 176, 178, 90, 110, 162, 179, 51, 213, 63, 44, 1, 50, 163, 144, 193, 104, 172, 93, 108 }, new byte[] { 165, 21, 97, 84, 75, 68, 194, 115, 161, 41, 67, 189, 176, 200, 38, 28, 214, 186, 130, 85, 222, 188, 111, 132, 245, 56, 56, 49, 129, 5, 190, 141, 159, 244, 253, 5, 138, 151, 190, 167, 160, 247, 46, 165, 8, 181, 175, 186, 121, 104, 32, 190, 240, 220, 74, 129, 117, 5, 157, 118, 7, 82, 9, 204, 201, 218, 216, 15, 162, 8, 200, 90, 8, 201, 193, 198, 187, 246, 224, 87, 116, 134, 201, 74, 92, 153, 205, 248, 53, 51, 139, 73, 32, 125, 252, 124, 34, 64, 177, 46, 196, 134, 98, 222, 26, 154, 51, 212, 28, 128, 212, 103, 255, 226, 222, 179, 113, 34, 49, 204, 245, 30, 253, 139, 108, 181, 8, 157 }, null });
+                values: new object[] { new Guid("46f9fc67-681d-4bf8-8dee-cfe3ee43aad4"), 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "narch@kodlama.io", new byte[] { 17, 53, 170, 207, 95, 149, 173, 144, 83, 48, 236, 220, 104, 33, 215, 216, 141, 216, 94, 19, 113, 126, 118, 248, 239, 183, 197, 157, 78, 182, 128, 243, 115, 249, 176, 162, 79, 240, 104, 234, 9, 26, 134, 44, 54, 30, 83, 99, 21, 174, 255, 169, 125, 107, 250, 33, 201, 217, 177, 76, 224, 74, 189, 169 }, new byte[] { 198, 182, 77, 20, 127, 175, 129, 188, 169, 215, 153, 2, 79, 11, 85, 224, 195, 12, 50, 183, 150, 228, 61, 184, 96, 9, 92, 42, 74, 194, 34, 71, 224, 158, 83, 44, 182, 99, 8, 244, 127, 141, 233, 237, 10, 190, 129, 127, 68, 199, 92, 80, 128, 152, 148, 192, 210, 127, 29, 203, 52, 73, 106, 56, 153, 20, 132, 222, 232, 23, 123, 247, 144, 193, 207, 225, 252, 226, 137, 199, 47, 94, 191, 77, 112, 20, 93, 100, 185, 173, 39, 245, 212, 186, 24, 214, 49, 234, 6, 191, 201, 95, 106, 34, 0, 243, 207, 66, 214, 236, 73, 67, 195, 189, 111, 218, 182, 133, 221, 240, 196, 131, 119, 14, 80, 152, 63, 146 }, null });
 
             migrationBuilder.InsertData(
                 table: "UserOperationClaims",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "OperationClaimId", "UpdatedDate", "UserId" },
-                values: new object[] { new Guid("25f17c80-4ab9-4f0d-8968-f329b0926fd4"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 1, null, new Guid("721b2e51-85ec-43ef-ac6c-14ca39af31b0") });
+                values: new object[] { new Guid("9851d4c7-2841-4a9b-887a-820b3f44bc51"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 1, null, new Guid("46f9fc67-681d-4bf8-8dee-cfe3ee43aad4") });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Customers_CorporateCustomerId1",
+                name: "IX_Customers_CorporateCustomerId",
                 table: "Customers",
-                column: "CorporateCustomerId1");
+                column: "CorporateCustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Customers_IndividualCustomerId1",
+                name: "IX_Customers_IndividualCustomerId",
                 table: "Customers",
-                column: "IndividualCustomerId1");
+                column: "IndividualCustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmailAuthenticators_UserId",
@@ -381,19 +381,19 @@ namespace Persistence.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Models_BrandId1",
+                name: "IX_Models_BrandId",
                 table: "Models",
-                column: "BrandId1");
+                column: "BrandId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Models_FuelId1",
+                name: "IX_Models_FuelId",
                 table: "Models",
-                column: "FuelId1");
+                column: "FuelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Models_TransmissionId1",
+                name: "IX_Models_TransmissionId",
                 table: "Models",
-                column: "TransmissionId1");
+                column: "TransmissionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OtpAuthenticators_UserId",
