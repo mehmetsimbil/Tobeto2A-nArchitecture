@@ -14,7 +14,7 @@ public class Model : Entity<Guid>
     public string Name { get; set; }
     public double DailyPrice { get; set; }
     public short Year { get; set; }
-    public Brand? Brand { get; set; } = null;
-    public Fuel? Fuel { get; set; } = null;
-    public Transmission? Transmission { get; set; } = null;
+    public virtual Brand? Brand { get; set; } = null; 
+    public virtual Fuel? Fuel { get; set; } = null;
+    public virtual Transmission? Transmission { get; set; } = null;
 }

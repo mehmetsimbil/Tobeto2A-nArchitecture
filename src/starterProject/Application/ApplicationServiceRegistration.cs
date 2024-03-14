@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+using System.Diagnostics;
+using System.Reflection;
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
 using Application.Services.UsersService;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
+using NArchitecture.Core.Application.Pipelines.Performance;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using NArchitecture.Core.Application.Pipelines.Validation;
 using NArchitecture.Core.Application.Rules;
@@ -19,6 +21,9 @@ using NArchitecture.Core.Localization.Resource.Yaml.DependencyInjection;
 using NArchitecture.Core.Mailing;
 using NArchitecture.Core.Mailing.MailKit;
 using NArchitecture.Core.Security.DependencyInjection;
+using Application.Services.IndividualCustomers;
+using Application.Services.Customers;
+using Application.Services.CorporateCustomers;
 
 namespace Application;
 
@@ -32,6 +37,7 @@ public static class ApplicationServiceRegistration
     )
     {
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        services.AddScoped<Stopwatch>();
         services.AddMediatR(configuration =>
         {
             configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
@@ -41,6 +47,7 @@ public static class ApplicationServiceRegistration
             configuration.AddOpenBehavior(typeof(LoggingBehavior<,>));
             configuration.AddOpenBehavior(typeof(RequestValidationBehavior<,>));
             configuration.AddOpenBehavior(typeof(TransactionScopeBehavior<,>));
+            configuration.AddOpenBehavior(typeof(PerformanceBehavior<,>));
         });
 
         services.AddSubClassesOfType(Assembly.GetExecutingAssembly(), typeof(BaseBusinessRules));
@@ -59,6 +66,9 @@ public static class ApplicationServiceRegistration
 
         services.AddSecurityServices<Guid, int>();
 
+        services.AddScoped<IIndividualCustomerService, IndividualCustomerManager>();
+        services.AddScoped<ICustomerService, CustomerManager>();
+        services.AddScoped<ICorporateCustomerService, CorporateCustomerManager>();
         return services;
     }
 

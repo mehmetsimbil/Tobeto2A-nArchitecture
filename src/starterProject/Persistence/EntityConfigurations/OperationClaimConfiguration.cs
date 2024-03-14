@@ -6,6 +6,12 @@ using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NArchitecture.Core.Security.Constants;
+using Application.Features.IndividualCustomers.Constants;
+using Application.Features.Customers.Constants;
+using Application.Features.CorporateCustomers.Constants;
+
+
+
 
 namespace Persistence.EntityConfigurations;
 
@@ -97,6 +103,48 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
         );
         #endregion
 
+        
+        #region IndividualCustomers
+        featureOperationClaims.AddRange(
+            [
+                new() { Id = ++lastId, Name = IndividualCustomersOperationClaims.Admin },
+                new() { Id = ++lastId, Name = IndividualCustomersOperationClaims.Read },
+                new() { Id = ++lastId, Name = IndividualCustomersOperationClaims.Write },
+                new() { Id = ++lastId, Name = IndividualCustomersOperationClaims.Create },
+                new() { Id = ++lastId, Name = IndividualCustomersOperationClaims.Update },
+                new() { Id = ++lastId, Name = IndividualCustomersOperationClaims.Delete },
+            ]
+        );
+        #endregion
+        
+        
+        #region Customers
+        featureOperationClaims.AddRange(
+            [
+                new() { Id = ++lastId, Name = CustomersOperationClaims.Admin },
+                new() { Id = ++lastId, Name = CustomersOperationClaims.Read },
+                new() { Id = ++lastId, Name = CustomersOperationClaims.Write },
+                new() { Id = ++lastId, Name = CustomersOperationClaims.Create },
+                new() { Id = ++lastId, Name = CustomersOperationClaims.Update },
+                new() { Id = ++lastId, Name = CustomersOperationClaims.Delete },
+            ]
+        );
+        #endregion
+        
+        
+        #region CorporateCustomers
+        featureOperationClaims.AddRange(
+            [
+                new() { Id = ++lastId, Name = CorporateCustomersOperationClaims.Admin },
+                new() { Id = ++lastId, Name = CorporateCustomersOperationClaims.Read },
+                new() { Id = ++lastId, Name = CorporateCustomersOperationClaims.Write },
+                new() { Id = ++lastId, Name = CorporateCustomersOperationClaims.Create },
+                new() { Id = ++lastId, Name = CorporateCustomersOperationClaims.Update },
+                new() { Id = ++lastId, Name = CorporateCustomersOperationClaims.Delete },
+            ]
+        );
+        #endregion
+        
         return featureOperationClaims;
     }
 #pragma warning restore S1854 // Unused assignments should be removed
